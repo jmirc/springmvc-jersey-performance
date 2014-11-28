@@ -1,0 +1,5 @@
+# Created by .gitignore support plugin (hsz.mobi)
+.idea
+target
+gs-accessing-twitter.iml
+.java-version
