@@ -3,6 +3,7 @@ package hello.configuration;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.SerializerConfig;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IList;
 import com.hazelcast.core.IMap;
 import com.hazelcast.instance.HazelcastInstanceFactory;
 import hello.cache.KryoTwitterSerializer;
@@ -44,7 +45,7 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public IMap<Object, Tweet> tweetCache() {
-        return hazelcastInstance.getMap("tweets");
+    public IList<Tweet> tweetCache() {
+        return hazelcastInstance.getList("tweets");
     }
 }

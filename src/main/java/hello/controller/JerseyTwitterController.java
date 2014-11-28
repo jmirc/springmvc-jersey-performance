@@ -1,5 +1,6 @@
 package hello.controller;
 
+import com.hazelcast.core.IList;
 import com.hazelcast.core.IMap;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.social.twitter.api.Tweet;
@@ -19,11 +20,11 @@ public class JerseyTwitterController {
 
     @Resource
     @Qualifier(value = "tweetCache")
-    private IMap<Object, Tweet> tweetCache;
+    private IList<Tweet> tweetCache;
 
     @GET
     public Response getUniqueTweet() {
-        return Response.ok().type(MediaType.APPLICATION_JSON).entity(tweetCache.values().iterator().next()).build();
+        return Response.ok().type(MediaType.APPLICATION_JSON).entity(tweetCache.get(0)).build();
     }
 
     @GET
@@ -40,7 +41,7 @@ public class JerseyTwitterController {
         Random r = new Random();
         long randomIndex=count<=Integer.MAX_VALUE? r.nextInt((int)count):
                 r.longs(1, 0, count).findFirst().orElseThrow(AssertionError::new);
-        return tweetCache.values().parallelStream().skip(randomIndex).findFirst();
+        return Optional.of(tweetCache.get((int) randomIndex));
     }
 
 }

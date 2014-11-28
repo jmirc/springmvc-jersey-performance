@@ -1,5 +1,6 @@
 package hello.cache;
 
+import com.hazelcast.core.IList;
 import com.hazelcast.core.IMap;
 import hello.configuration.CacheConfiguration;
 import org.slf4j.Logger;
@@ -22,7 +23,7 @@ public class TwitterLoader {
     private Logger logger = LoggerFactory.getLogger(TwitterLoader.class);
 
     @Resource
-    private IMap<Object, Tweet> tweetCache;
+    private IList<Tweet> tweetCache;
 
     @PostConstruct
     public void loader() {
@@ -33,7 +34,7 @@ public class TwitterLoader {
         final List<Tweet> tweets = search.getTweets();
 
         tweets.stream()
-                .forEach(tweet -> tweetCache.put(tweet.getId(), tweet));
+                .forEach(tweetCache::add);
 
         logger.info("The cache is loaded.");
     }
