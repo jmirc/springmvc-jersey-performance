@@ -27,7 +27,7 @@ public class JerseyTwitterController {
     }
 
     @GET
-    @Path("/random")
+    @Path("random")
     public Response getRandomTweet() {
         return random()
                 .map(tweet -> Response.ok().type(MediaType.APPLICATION_JSON).entity(tweet).build())
